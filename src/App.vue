@@ -1,30 +1,93 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
   <router-view />
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+  @import url(./assets/base.css);
+  body {
+    padding: 0;
+    margin: 0;
+  }
 
-nav {
-  padding: 30px;
-}
+  :root {
+    --light-gray: #efefef;
+    --dark-gray: #e3e2e2;
+    --c-block: #f3f4f8;
+    --c-body: #1e2020;
+    --c-text: #c9cbd0;
+    --c-accent: #25282a;
+    --c-hover: #323639;
+    --с-accent-dark: rgb(53, 48, 48);
+    --c-underline: #28d2236f;
+    --c-border: rgba(80, 80, 80, 0.3);
+  }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+  button {
+    color: var(--c-text);
+    border-radius: 10px;
+    background-color: var(--c-accent);
+    border: 2px var(--c-border) solid;
+  }
 
-nav a.router-link-exact-active {
-  color: #42b983;
-}
+  button:hover {
+    border-color: rgba(137, 137, 137, 0.3);
+  }
+
+  body {
+    background-color: var(--c-body);
+  }
+
+  input[type="text"] {
+    background-color: var(--c-accent);
+    border: 2px solid var(--c-border);
+    border-radius: 10px;
+    height: 40px;
+  }
+
+  summary {
+    position: relative;
+    list-style: none;
+  }
+
+  summary::before {
+    content: "\25B6";
+    position: absolute;
+    right: 10px;
+    border-top: 2px var(--c-border) solid;
+    border-right: 2px var(--c-border) solid;
+    transform: translate(0, -2px) rotate(135deg);
+    margin-top: 14px;
+    color: rgba(0, 0, 0, 0);
+    height: 10px;
+    width: 10px;
+    transition: 0.2s;
+    /* position: absolute;
+    
+    float: right;
+    transform: rotate(45deg);
+    
+    color: rgba(0, 0, 0, 0);
+    border-top: 2px var(--c-border) solid;
+    border-right: 2px var(--c-border) solid;
+    margin-top: 13px;
+    right: 10px;
+    background-repeat: no-repeat; */
+  }
+
+  details[open] > summary::before {
+    content: "\25B6";
+    position: absolute;
+    right: 10px;
+    border-top: 2px var(--c-border) solid;
+    border-right: 2px var(--c-border) solid;
+    transform: rotate(45deg);
+    margin-top: 14px;
+    color: rgba(0, 0, 0, 0);
+    height: 10px;
+    width: 10px;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
 </style>

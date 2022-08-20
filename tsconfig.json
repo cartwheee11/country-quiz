@@ -6,6 +6,8 @@
     "jsx": "preserve",
     "moduleResolution": "node",
     "skipLibCheck": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
