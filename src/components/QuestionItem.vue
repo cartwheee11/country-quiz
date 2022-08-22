@@ -116,19 +116,24 @@
 
       async rollOptions() {
         this.options = [];
-        while (this.options.length < this.optionsNumber) {
-          console.log(this.options.length, this.optionsNumber);
-          let country = await api.getRandomCountry(this.region);
+        let array = await api.getRandomCountries(
+          this.optionsNumber,
+          this.region
+        );
+        this.options = array.map((country) => country.name);
+        // while (this.options.length < this.optionsNumber) {
+        //   console.log(this.options.length, this.optionsNumber);
+        //   let country = await api.getRandomCountry(this.region);
 
-          // console.log(this.options.indexOf(country.name));
+        //   // console.log(this.options.indexOf(country.name));
 
-          if (
-            this.options.concat([this.country.name]).indexOf(country.name) ===
-            -1
-          ) {
-            this.options.push(country.name);
-          }
-        }
+        //   if (
+        //     this.options.concat([this.country.name]).indexOf(country.name) ===
+        //     -1
+        //   ) {
+        //     this.options.push(country.name);
+        //   }
+        // }
 
         let rand = Math.floor(Math.random() * this.options.length);
         this.options[rand] = this.country.name;
