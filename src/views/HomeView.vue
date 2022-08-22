@@ -7,7 +7,7 @@
           <select-item
             class="select-region"
             v-model="region"
-            :options="regions.concat(subregions)"
+            :options="['All Regions', ...regions, ...subregions]"
           />
         </div>
       </div>
@@ -33,7 +33,7 @@
 
     data() {
       return {
-        region: "Region",
+        region: "All Regions",
         country: {},
         regions: [] as Array<string>,
         subregions: [] as Array<string>,

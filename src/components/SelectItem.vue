@@ -85,6 +85,12 @@
     position: absolute;
     top: 38px;
     width: 100%;
+    max-height: 300px;
+    overflow-y: scroll;
+  }
+
+  .drop-down::-webkit-scrollbar {
+    display: none;
   }
   .option {
     margin: 0;
