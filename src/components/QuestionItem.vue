@@ -136,13 +136,20 @@
         // }
 
         let rand = Math.floor(Math.random() * this.options.length);
-        this.options[rand] = this.country.name;
+        if (
+          this.options.length == this.optionsNumber &&
+          this.options.indexOf(this.country.name) == -1
+        ) {
+          this.options[rand] = this.country.name;
+        }
       },
     },
 
     watch: {
       region() {
         this.rollQuestion();
+        this.rights = 0;
+        this.wrongs = 0;
       },
     },
 

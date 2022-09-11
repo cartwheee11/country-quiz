@@ -3,16 +3,19 @@
     <details @focusout="onDetailsUnfocuse" ref="details">
       <summary ref="summary">
         <input
-          :value="modelValue"
-          @focusout="onInputUnclick"
-          @focus="onInputClick"
+          placeholder="Choose a region"
+          v-model="input"
+          @mouseup="onInputClick"
+          @focusout="onInputUnfocus"
+          @focus="onInputFocus"
+          @input="onInputChange"
           type="text"
         />
       </summary>
       <div class="drop-down">
         <p
           @mousedown.stop="onOptionClick"
-          v-for="option in options"
+          v-for="option in filteredOptions"
           :key="option"
           class="option"
         >
@@ -35,36 +38,88 @@
 
       default: {
         required: false,
-        type: String as PropType<string | undefined>,
+        type: String as PropType<string>,
       },
 
       modelValue: String as PropType<string>,
     },
 
+    data() {
+      return {
+        input: "",
+        isOnlySearchedOptionsShown: false,
+        filteredOptions: [] as Array<string>,
+      };
+    },
+
     mounted() {
       // console.log(this.$refs.summary);
+      // if (this.default) {
+      //   this.input = this.default;
+      // }
+
+      if (this.modelValue) this.input = this.modelValue;
+
+      this.filteredOptions = this.options.slice();
+    },
+
+    watch: {
+      options() {
+        if (!this.isOnlySearchedOptionsShown) {
+          this.filteredOptions = this.options;
+        } else {
+          this.filteredOptions = this.options.filter((s) =>
+            s.toLowerCase().includes(this.input.toLowerCase())
+          );
+        }
+      },
+
+      isOnlySearchedOptionsShown() {
+        if (!this.isOnlySearchedOptionsShown) {
+          this.filteredOptions = this.options;
+        }
+      },
     },
 
     methods: {
+      onInputChange() {
+        this.isOnlySearchedOptionsShown = true;
+        // this.filteredOptions = [];
+        this.filteredOptions = this.options.filter((s) =>
+          s.toLowerCase().includes(this.input.toLowerCase())
+        );
+      },
+
+      onInputClick(e: any) {
+        this.$nextTick(() => {
+          e.target.select();
+        });
+      },
+
       onOptionClick(e: any) {
         let text = e.target.innerText;
         this.$emit("update:modelValue", text);
+        this.input = text;
+        this.isOnlySearchedOptionsShown = false;
       },
 
-      onInputClick() {
+      onInputFocus(e: any) {
+        // this.$emit("update:modelValue", "");
         if (!(this.$refs.details as any).hasAttribute("open")) {
           (this.$refs.summary as any).click();
         }
       },
 
-      onInputUnclick() {
+      onInputUnfocus() {
         if ((this.$refs.details as any).hasAttribute("open")) {
           (this.$refs.summary as any).click();
         }
+
+        this.input = this.modelValue as string;
       },
 
       onDetailsUnfocuse() {
-        this.onInputUnclick();
+        this.onInputUnfocus();
       },
     },
   });

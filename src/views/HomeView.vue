@@ -40,12 +40,6 @@
       };
     },
 
-    watch: {
-      region() {
-        console.log(this.region);
-      },
-    },
-
     mounted() {
       Promise.all([api.getRegions(), api.getSubregions()]).then(
         ([regions, subregions]) => {
