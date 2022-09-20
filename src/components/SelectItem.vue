@@ -5,6 +5,7 @@
         <input
           placeholder="Choose a region"
           v-model="input"
+          @keyup="onInputKeyUp"
           @mouseup="onInputClick"
           @focusout="onInputUnfocus"
           @focus="onInputFocus"
@@ -12,12 +13,15 @@
           type="text"
         />
       </summary>
-      <div class="drop-down">
+      <div ref="dropDown" class="drop-down">
         <p
           @mousedown.stop="onOptionClick"
           v-for="option in filteredOptions"
           :key="option"
           class="option"
+          :class="{
+            selected: option == selectedOption,
+          }"
         >
           {{ option }}
         </p>
@@ -46,6 +50,7 @@
 
     data() {
       return {
+        selectedOption: "" as string,
         input: "",
         isOnlySearchedOptionsShown: false,
         filteredOptions: [] as Array<string>,
@@ -53,11 +58,6 @@
     },
 
     mounted() {
-      // console.log(this.$refs.summary);
-      // if (this.default) {
-      //   this.input = this.default;
-      // }
-
       if (this.modelValue) this.input = this.modelValue;
 
       this.filteredOptions = this.options.slice();
@@ -82,6 +82,51 @@
     },
 
     methods: {
+      selectOption(option: string) {
+        this.selectedOption = option;
+
+        this.$nextTick(() => {
+          const dd = this.$refs.dropDown as HTMLElement;
+          const ddh = parseInt(window.getComputedStyle(dd).height);
+
+          let selectedOptionDom: HTMLElement = (
+            this.$refs.dropDown as any
+          ).querySelector(".selected");
+
+          const soh = parseInt(
+            window.getComputedStyle(selectedOptionDom).height
+          );
+          const offset = selectedOptionDom.offsetTop;
+
+          console.log(offset, ddh, dd.scrollTop);
+
+          if (offset + soh > ddh + dd.scrollTop || offset < dd.scrollTop) {
+            dd.scrollTo(0, offset - 20);
+          }
+        });
+      },
+
+      onInputKeyUp(event: any) {
+        console.log(event.key);
+        let arr = this.filteredOptions;
+        let input = this.input;
+        let index = arr.indexOf(input);
+
+        if (event.key === "ArrowDown") {
+          this.input = arr[(index + 1) % arr.length];
+          this.selectOption(this.input);
+        } else if (event.key == "ArrowUp") {
+          let newIndex = index - 1 >= 0 ? index - 1 : arr.length - 1;
+          this.input = arr[newIndex];
+          this.selectOption(this.input);
+        } else if (event.key == "Enter") {
+          this.chooseOption(this.input);
+          this.$nextTick(() => {
+            event.target.blur();
+          });
+        }
+      },
+
       onInputChange() {
         this.isOnlySearchedOptionsShown = true;
         // this.filteredOptions = [];
@@ -96,11 +141,20 @@
         });
       },
 
+      chooseOption(option: string) {
+        this.onInputUnfocus();
+
+        this.$emit("update:modelValue", option);
+        this.input = option;
+        this.isOnlySearchedOptionsShown = false;
+      },
+
       onOptionClick(e: any) {
         let text = e.target.innerText;
-        this.$emit("update:modelValue", text);
-        this.input = text;
-        this.isOnlySearchedOptionsShown = false;
+        this.chooseOption(text);
+        // this.$emit("update:modelValue", text);
+        // this.input = text;
+        // this.isOnlySearchedOptionsShown = false;
       },
 
       onInputFocus(e: any) {
@@ -152,6 +206,10 @@
     padding: 10px;
     color: #c9cbd0;
     margin: 0;
+  }
+
+  .selected {
+    background-color: var(--c-border);
   }
   .option:hover {
     background-color: var(--c-border);
