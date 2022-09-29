@@ -189,13 +189,18 @@
   .drop-down {
     overflow: hidden;
     border-radius: 10px;
-    background-color: var(--c-accent);
-    border: 2px solid var(--c-border);
+    background-color: var(--c-base);
+    border: 1px solid var(--c-border);
     position: absolute;
     top: 38px;
     width: 100%;
     max-height: 300px;
     overflow-y: scroll;
+  }
+
+  input {
+    background-color: var(--c-base);
+    border: none;
   }
 
   .drop-down::-webkit-scrollbar {

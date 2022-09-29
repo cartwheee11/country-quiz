@@ -5,13 +5,14 @@
       <button @click="restart">Restart</button>
     </div>
     <div v-else class="wrapper">
-      <h3 v-if="questionType == 'capital'">
-        {{ country.capital }} is the capial of
+      <h3 class="question" v-if="questionType == 'capital'">
+        <span class="capital">{{ country.capital }}</span> is the capial of
       </h3>
 
-      <h3 v-else-if="questionType == 'flag'">
-        <img :src="country.flags?.png" alt="" /><br />
-        Which country does this flag belong to <br />
+      <h3 class="question" v-else-if="questionType == 'flag'">
+        <img class="flag" :src="country.flags?.png" alt="" /><br />
+        <span class="capital">Which country</span> does this <br />
+        flag belong to <br />
       </h3>
 
       <button
@@ -22,7 +23,10 @@
       >
         {{ option }}
       </button>
-      <p>Score: {{ rights }} / {{ wrongs }}</p>
+      <h4 class="score">
+        <span class="rights">{{ rights }}</span> :
+        <span class="wrongs">{{ wrongs }}</span>
+      </h4>
     </div>
   </section>
 </template>
@@ -163,9 +167,9 @@
   .wrapper {
     margin-top: 10px;
     padding: 20px;
-    border-radius: 10px;
-    background-color: var(--c-accent);
-    border: 2px var(--c-border) solid;
+    border-radius: 12px;
+    background-color: var(--c-base);
+    /* border: 1px var(--c-border) solid; */
   }
 
   hr {
@@ -177,14 +181,25 @@
     height: 40px;
     padding: 0;
     margin-top: 10px;
+    background-color: #2a2a2d;
+    border: none;
   }
 
   .result {
-    background-color: rgb(33, 139, 79);
+    /* background-color: #4bb34b; */
+    background-color: var(--c-accent);
+  }
+
+  .score .wrongs {
+    opacity: 0.7;
+  }
+
+  .score .rights {
+    color: var(--c-accent);
   }
 
   .wrong {
-    background-color: rgb(162, 94, 94);
+    background-color: rgb(199, 79, 79);
   }
 
   h3 {
@@ -192,8 +207,28 @@
     margin-bottom: 10px;
   }
 
+  h3.question {
+    font-weight: 500;
+  }
+
+  h3.question .capital {
+    font-weight: 700;
+    font-family: "montserrat";
+    color: var(--c-accent);
+  }
+
   img {
     width: 10%;
     margin-bottom: 10px;
+  }
+
+  img.flag {
+    border-radius: 6px;
+  }
+
+  @media screen and (max-width: 600px) {
+    img {
+      width: 20%;
+    }
   }
 </style>

@@ -2,6 +2,7 @@
   <section>
     <div class="container main-container">
       <div class="title-section">
+        <img class="logo" width="24" src="../assets/logo-small.png" alt="" />
         <h3 class="title">Country Quiz</h3>
         <div class="select-container">
           <select-item
@@ -63,13 +64,26 @@
   }
 
   .title-section {
+    gap: 10px;
     display: flex;
-    column-gap: 50px;
+    /* column-gap: 50px; */
     align-items: center;
   }
 
   .title-section h3 {
     margin: 0;
+  }
+
+  .title {
+    font-size: 24px;
+    font-weight: 500;
+    display: inline-block;
+  }
+
+  .logo {
+    /* margin-right: 13px; */
+    vertical-align: middle;
+    display: inline-block;
   }
 
   .main-container {
@@ -92,9 +106,11 @@
       padding: 15px;
     }
 
-    .title {
+    .title-section {
       /* display: none; */
-      padding-bottom: 10px;
+
+      /* padding-bottom: 10px; */
+      /* vertical-align: ; */
     }
 
     .select-region {

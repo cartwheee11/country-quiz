@@ -12,10 +12,11 @@
   :root {
     --light-gray: #efefef;
     --dark-gray: #e3e2e2;
-    --c-block: #f3f4f8;
-    --c-body: #1e2020;
+    --c-block: #222222;
+    --c-body: #1c1c1e;
     --c-text: #c9cbd0;
-    --c-accent: #25282a;
+    --c-base: #242426;
+    --c-accent: #7373fa;
     --c-hover: #323639;
     --с-accent-dark: rgb(53, 48, 48);
     --c-underline: #28d2236f;
@@ -26,7 +27,7 @@
     color: var(--c-text);
     border-radius: 10px;
     background-color: var(--c-accent);
-    border: 2px var(--c-border) solid;
+    border: 1px var(--c-border) solid;
   }
 
   button:hover {
@@ -39,7 +40,7 @@
 
   input[type="text"] {
     background-color: var(--c-accent);
-    border: 2px solid var(--c-border);
+    border: 1px solid var(--c-border);
     border-radius: 10px;
     height: 40px;
   }
