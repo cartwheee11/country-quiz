@@ -19,6 +19,7 @@
         @click="onOptionClick"
         v-for="option in options"
         :key="option"
+        class="option"
         :class="{ result: isResultShown && option == country.name }"
       >
         {{ option }}
@@ -164,6 +165,28 @@
 </script>
 
 <style scoped>
+  @keyframes shake {
+    from {
+      transform: translate(0, 0);
+    }
+
+    25% {
+      transform: translate(-10px, 0);
+    }
+
+    50% {
+      transform: translate(10px, 0);
+    }
+
+    75% {
+      transform: translate(-10px, 0);
+    }
+
+    to {
+      transform: translate(0, 0);
+    }
+  }
+
   .wrapper {
     margin-top: 10px;
     padding: 20px;
@@ -185,6 +208,14 @@
     border: none;
   }
 
+  .option {
+    transition: 0.2s;
+  }
+
+  .option:hover {
+    transform: scale(0.98);
+  }
+
   .result {
     /* background-color: #4bb34b; */
     background-color: var(--c-accent);
@@ -199,7 +230,9 @@
   }
 
   .wrong {
-    background-color: rgb(199, 79, 79);
+    /* background-color: rgb(199, 79, 79); */
+    /* opacity: 0.4; */
+    animation: shake 0.2s;
   }
 
   h3 {
